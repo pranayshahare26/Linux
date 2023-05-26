@@ -1,0 +1,707 @@
+Open Source:
+------------
+- Free to study
+- Free to modify
+- Free to dist
+
+mkdir 
+
+# cat /bin/mkdir
+-------------------
+History of Shell:-
+-----------------
+- sh [ Shell ]
+- ksh [ Korn Shell ] Unix Script
+- csh [ C lang Shell ]
+- tcsh [ Turboo C Shell ]
+- BASH [ ksh + tcsh ]
+- zsh
+
+
+Script: To exec multiple objects
+using a single object.
+
+create a file:
+cmd1
+cmd2
+cmd3 [failed]
+.
+.
+.
+================
+Booting process:
+----------------
+1) POST [Power On Self Test]
+2) BIOS 
+	Booting Priority
+	\_ HDD [*]
+	\_ CD/DVD
+	\_ N/W
+	\_ USB
+3) MBR [Master Boot Record]: Partition Table
+
+Booting Flag!
+
+4) Bootloader [GRUB]
+5) GUI/CLI
+=================================
+Linux vs Unix ? 5 diff
+=================================
+
+Installation Linux:
+-------------------
+Partitioning: ext4,xfs
+-------------
+Recommanded to Install Linux = 8G
+
+1) / 		[Parent Partiton]
+ 
+2) /boot	[ Booting Configuration]GRUB	200-300MB
+
+3) SWAP		[RAM     x 2]
+		Phy mem	  HDD
+		4G
+
+[ Virtual Mem: A part of HDD act as RAM. ]
+
+===========================================
+HDD1 - sda
+
+sd [ Storage Device]
+
+sda1
+sda2
+sda3
+-----
+CD/DVD - sr0
+CD/DVD - sr1
+
+sr [Storage Read-Only]
+
+----------------------
+/			[ Parent Partition ]
+/bin 		[ Binary ]
+/sbin 		[ Super Binary ]
+/usr		[ Critical - All the system commands ]
+/dev		[ Devices ]
+/etc		[Important - System Config & System Services ]
+/lib & /lib64 	[ Library ]
+/media, /mnt, /opt, /misc 	[ Empty ]
+/home		[Home Dir of Normal Users]
+/root		[Home Dir of Super User]
+Lost+Found	Store the swappable data.
+/proc		[Processes]
+/selinux	[Security Enhanced Linux]- RedHat Distro.. NSA 2002
+/srv		[Only Third Party Services]
+/sys		[System Driver Database]
+/tmp		[temp]world writable dir
+/var		[Variable - e.g. : logs etc.. ]
+-----------------------------------------------------------
+Terminal/Shell/Console:
+-----------------------
+[root@localhost ~]# 
+user  hostname
+name
+~ = /root
+Tilte [~] : Home dir of current loggedin user.
+
+root [ /root ]
+natasha [ /home/natasha ]
+
+# : LoggedIn as root
+$ : LoggedIn as normal user
+--------------------
+Basic Commands:
+----------------
+PATH:
+`````
++ Absolute [ /home/natasha/Desktop ] 
++ Relative [ Desktop ]
+
+
+pwd	[present/print working dir]
+cd 	[ Change Dir ]
+
+	# cd path
+	# cd ..
+	# cd -
+	# cd [ Home Dir ]
+ls	[ List of dir contents ]
+	# pwd
+	/
+	# ls /root/Desktop
+mkdir dirname 	[Make Dir]
+touch filename 	[To create a blank file]
+cat > filename	[To create a new file with text]
+	e.g: # cat > marvels
+		TEXT
+		[ctrl+d]-> exit
+
+> [Standard output to the program]
+< [Standard input to the program]
+
+cat filename	[ To show the text of file]
+cat >> file	[ Append the text in existing file.]
+		e.g: # cat >> marvels
+		TEXT2
+		[ctrl+d]-> exit
+
+date
+cal
+clear [To clear the screen/terminal] OR ctrl+l
+COPY:
+-----
+a) File to File:
+----------------
+	# cp srcFilename dstFilename
+	OR
+	# cp -fv srcFilename dstFilename
+	[-f : Forcefully ]
+	[-v : Verbose]View the process in detail.
+
+b) File/Dir to Dir
+------------------
+	# cp -r srcFile/Dir dstDir 
+	[ -r : Recursive ]*
+-f : forcefully
+-v : verbose
+
+man cmd	[ Manual of command ]
+	e.g: # man mkdir
+
+[tarball + Gunzip]:[.tgz]
+-------------------
+a) Create:
+# tar -czvf natasha_backup.tgz /home/natasha 
+
+b) View:
+# tar -tzvf natasha_backup.tgz
+
+c)extract
+# tar -xzvf natasha_backup.tgz
+# tar -xzvf natasha_backup.tgz -C /data
+=========================================================
+
+sort:
+-----
+
+# cat file | sort
+# cat lol | sort -u
+=============================================================
+
+# cat lol | sort -u --version-sort
+
+Basic Users & group management:
+-------------------------------
+
+1) Super User
+2) Normal User
+
+
+=> user related information stored into: 
+
+# cat /etc/passwd
+
+user:x:1000:1000:COMMENT:/home/user:/bin/bash
+name | UID  GID   					 Home Dir  Shell
+      \_ Password required 
+
+
+UID (0-60000)		|	GID (0-60000)
+----------------------------------------------------
+0-999 [Super User]		|	0-999 [Super group]
+1000+ [Normal User]	|	1000+ [normal Group]
+-----------------------------------------------------
+
+=> user password related information stored into: 
+
+# cat /etc/shadow
+user:Encrypted Password:Acc. Age
+
+SHA512 + Salt Algo
+
+# chage -l username
+
+Groups:
+-------
+
+=> Group related information stored into: 
+
+# cat /etc/group
+
+grp:x:GID
+
+=> Group password related information stored into:
+
+# cat /etc/gshadow
+grp:encrypted pass
+
+================
+a) Create user:
+
+# useradd username
+OR
+# adduser username
+
+b) Assign/Change the password:
+
+# passwd username
+# passwd -d username
+[-d : delete]
+
+c) Remove User:
+
+- Without home dir:
+	# userdel natasha
+
+- with home dir
+	# userdel -r username
+
+d) Create a group:
+
+# groupadd groupname
+
+e) Assign/Chnage Password:
+
+# gpasswd groupname
+
+
+f) To delete a group:
+
+# groupdel groupname
+
+To switch the user:
+
+# su - username
+$ exit [Logout]
+
+# id username
+======================================
+Basic Permissions: [ File based ]
+------------------
+
+1) Symbolic Method
+===================
+read		: r
+write		: w
+execute	: x
+------------
+user owner	: u
+group owner	: g
+Others			: o
+All				: a
+------------
+Assign		: +
+Remove		: -
+Overwrite	: =
+------------
+Permission Area:
+----------------
+--- : user owner
+--- : group owner
+--- : Others
+
+# ls -l
+-rw-r--r--. 1 root root   43 Sep 23 01:56 file1
+
+Default permissions for file: 644
+-----------------------------
+read & write	: u
+read			: g
+read			: o
+
+Default permissions for dir: 755
+----------------------------
+read, write & execute	: u
+read & execute			: g
+read & execute			: o
+
+Change permissions in Symbolic menthod:
+---------------------------------------
+# chmod u+rx file/dir
+# chmod u-r,g+rw,o-rwx file/dir
+# chmod u=rw file/dir
+# chmod a=r file/dir
+
+2) Numeric Method
+-----------------
+
+read		: 4
+write		: 2
+execute	: 1
+Full		: 7
+No	: 0
+
+---	000	0
+r--	100	4	
+-w-	010	2
+--x	001	1
+rwx	111	7
+
+# chmod 711 file/dir
+# chmod 111 dir -R
+[-R : recursively]
+================================
+
+Default permissions for file: 644
+Default permissions for dir: 755
+
+Membership:
+-----------
+
+a) Primary Membership
+---------------------
+- add a user as primary member of a group
+# groupadd grp1
+# useradd -g grp1 u1
+
+-g : Primary Membership
+
+b) Secondary Membership
+
+- add a user as secondary member of a group
+# groupadd grp2
+
+# useradd -G grp2 u2
+
+-G : Secondary Membership
+
+- add existing user as a secondary member of a group
+
+# usermod -G grp2 natasha
+
+
+e.g: 
+
+# useradd -G grp u1
+# useradd -G grp u2
+======================================
+
+- Editor [ VIM ]
+`````
+# vim filename
+
+
+Command Line Mode:
+------------------
+i	: To goto the insert mode.
+Esc	: Return to command line mde.
+o	: Jump to next line & take you to insert mode.
+O	: Go to insert mode by adjusting the current line to next line.
+yy 	: To copy [yanked] the current line.
+p	: Paste
+nyy	: n = 1,2,3,4...n Copy `n` number of lines.
+dd	: Cut OR Delete the current line.
+ndd	: n = 1,2,3,4...n Cut/Delete `n` number of lines.
+G : To goto end of file
+u	 : Undo
+^r : Redo
+
+
+
+
+Last line Actions:
+------------------
+:set nu	: Set number of line.
+:set nonu: remove number of line.
+:line	: take you to specific line number
+:%s/original_word/new_word : Replace word
+/word : Search word
+:w	: Write/Save
+:q	: Quit
+:wq	: Write & Quit
+:w!	: Write/Save Forcefully
+:q!	: Quit Forcefully
+:wq!	: Write & Quit Forcefully
+
+==============================================================
+Process Management:
+````
+Process:
+``
+- Any running program is a process
+- Multiple instances of the same program are processes.
+- Shell is also a process
+
+
+Process ID (PID)
+````
+- Each linux process is identified by unique id PID 
+- Every process has a Parent Process ID (PPID)
+	+ Except "init"
+Create a Process:
+``
+Terminal#1
+``
+# sleep 100
+
+Terminal#2
+``
+# ps -la		[ Show the processes with PID & PPID ]
+
+Process States:
+```
+- The process is built and executing , so now...
+- We enter the Process State Machine
+
+===============================================================
+Managing Processes:
+`````
+- Linux kernel tracks what each process is doing
+- Process is assigned a priority
+- Address space assigned to the process
+- Files is the process allowed to access
+- Is the process a ?:-
+	+ Parent
+	+ Child
+	+ Zombie
+
+=> Sometimes the parent dies first
+````
+- If the parent just exits or dies, the child process is left running
+- The child's PPID is no longer valid due to parent is gone.
+- Linux calls these children processes "Zombies"
+- In Linux a zombie is just a process in which the children are adopted by the "init" process
+- The init process will eventually cleanup the zombie childrens
+
+PPID[kill]
+	\___________PID[kill]
+
+PPID[die]
+	\___________PID[zombie]
+
+
+Process Termination:
+``
+
+- When a parent forks a child, they can finish in any order( parent first or child first)
+- Sometimes the parent process could encounter and error and die
+- Sometimes the parent process will just wait around until the child processes all complete brfore exiting
+	+ it calls a wait() command
+- There are variety of wait command.
+
+
+process manager: 
+````
+ps, top, htop
+`````
+# top
+
+press 'q' to exit
+
+
+# sleep 10 &
+
+# ps 		[ PID - Process ID]
+# ps -l 	[ Show the PPID - Parent PID ]
+# ps -e		[ All the processes ]
+
+# ps -la
+
+Kill:
+-----
+# kill PID
+OR
+# kill -9 PID
+
+-9 : Forcefully
+
+# pkill sleep
+
+# killall sleep
+--------------------
+
+
+# sleep 10000 &
+# sleep 20000 &
+
+
+
+
+Check backgroup process:
+
+# jobs
+[1]-  Running                 sleep 10000 &
+[2]+  Running                 sleep 20000 &
+
+-  : Second last added in jobs
++  : last added in jobs
+
+# jobs -l	[ with PID ]
+[1]-   971 Running                 sleep 10000 &
+[2]+   972 Running                 sleep 20000 &
+
+
+# fg %2
+
+ctrl+z [stop]
+
+# bg %2 [ To start in BG ]
+
+==============================
+
+UMASK octal values:
+```````
+022
+File: 
+666 - 022 = 644
+
+Dir
+777 - 022 = 755
+
+# umask 0000
+=================================
+Shell Scripting:
+----------------To run multiple objects[binary/commands] using a single object[file].
+
+.sh || .bash 
+
+# vim runme.sh
+
+#!/bin/bash	 [env declaration]SHEBANG
+cmd1
+cmd2
+cmd3
+
+:wq [Save & Quit]
+
+# chmod u+x runme.sh
+# ./runme.sh
+
+OR
+
+# bash runme.sh
+
+
+==> Debug:
+----------
+
+# bash -x runme.sh
+
+
+~~~~~~~~~~~
+Variable:
+---------
+#!/bin/bash
+target=example.com
+
+echo "My target for today is: $target"
+-----------
+#!/bin/bash
+read -p "Enter the target: " target
+echo "My target for today is: $target"
+-----------
+#!/bin/bash
+target=$(whoami)
+echo "My user for today is: $target"
+-----------
+Arithmetic
+~~~~~
+x=10
+y=2
+echo $(($x + $y))
+--------
+read -p "Enter first: " x
+read -p "Enter second: " y
+echo $(($x + $y))
+--------
+#!/bin/bash
+expr 2 + 2
+expr 2 - 2
+expr 2 / 2
+expr 2 \* 2
+===============================
+Conditions:
+``
+1) if...then...fi
+``
+#!/bin/bash
+read -p "Enter: " a
+
+if [[ $a == "0" ]];then
+	echo "Ch mayla"
+fi
+
+
+
+
+2) if...then...else...fi
+````
+#!/bin/bash
+read -p "Enter: " a
+
+if [[ $a == "0" ]];then
+	echo "Ch mayla"
+else
+	echo "Tumse na ho payega"
+fi
+
+
+
+3) if...then...elif...then...fi
+``````
+#!/bin/bash
+read -p "Enter: " a
+
+if [[ $a == "0" ]];then
+	echo "WoW"
+elif [[ $a == "1" ]];then
+	echo "Kidding"
+fi
+
+
+
+
+4) if...then...elif...then...else...fi
+``````
+#!/bin/bash
+read -p "Enter: " a
+
+if [[ $a == "0" ]];then
+	echo "WoW"
+elif [[ $a == "1" ]];then
+	echo "Kidding"
+else 
+	echo "Don't take it lightly"
+fi
+
+1) Relational Operator:
+`````
+Numeric comparisons: ==, !=, <, <=, >, >=, =, !
+String Comparisons: -eq, -ne, -lt, -le, -gt, -ge
+
+[[ STRING == STRING ]]	Equal
+[[ STRING != STRING ]]	Not Equal
+[[ NUM -eq NUM ]]		Equal
+[[ NUM -ne NUM ]]		Not equal
+[[ NUM -lt NUM ]]		Less than
+[[ NUM -le NUM ]]		Less than or equal
+[[ NUM -gt NUM ]]		Greater than
+[[ NUM -ge NUM ]]		Greater than or equal
+[[ STRING =~ STRING ]]	Match Regexp
+[[ STRING !~ STRING ]]	Not-Match Regexp
+
+File Ops:
+
+[[ -e FILE ]]	Exists
+[[ -r FILE ]]	Readable
+[[ -w FILE ]]	Writable
+[[ -x FILE ]]	Executable
+[[ -f FILE ]]	File
+[[ -d FILE ]]	Directory
+[[ -z STRING ]]	Empty string
+[[ -n STRING ]]	Not empty string
+
+2) Logical Operators:
+```````
+||, &&, !
+
+[[ $a == "0" && $b == "1" ]]
+[[ $a == "0" ]] && [[ $b == "1" ]]
+
+[[ $a == "0" || $b == "1" ]]
+[[ $a == "0" ]] || [[ $b == "1" ]]
+
+[[ ! -z $VAR ]] : Not Empty
+
+========================================

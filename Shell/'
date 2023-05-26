@@ -1,0 +1,15 @@
+#! /bin/bash
+echo "==== Leap/Not Leap ===="
+read -p "Enter year [yyyy] :"a
+re = ^[0-9]+$
+if [[ $a =~ $re ]]
+then
+	if [[ $(( $a%4 )) =0 -0 $a == 366 ]]
+	then
+		echo "This is leap year"
+	else
+		echo "This is not leap year"
+	fi
+else
+	echo "Enter the number!"
+fi

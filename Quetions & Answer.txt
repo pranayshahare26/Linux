@@ -1,0 +1,62 @@
+1. switch to root user [Hint - su - root]
+=> # sudo -i
+
+2. Create a user natasha and harry using adduser command
+=> # adduser natasha
+   # adduser harry
+
+3. create a group "admin" and assign the user natasha and harry to group testing as secondary member
+=> addgroup admin
+	usermod -aG testing natasha
+	usermod -aG testing harry
+
+4. add the natasha and harry users in the /etc/sudoers file
+=> visudo
+=> natasha ALL=(ALL) ALL
+	harry ALL=(ALL) ALL
+
+5. with root user navigate to directory /media
+=> cd /media
+
+6. inside the /media directory create a directory "test-scripts"
+=> cd media
+	/media # mkdir test-scripts
+
+7. create two files "ax.txt" "bz.txt"
+=> cd test-scripts
+   touch ax.txt bz.txt
+
+8. change ownership of "ax.txt" and "bz.txt" from group root to natasha.
+=> chown :natasha ax.txt bz.txt
+
+9. set permission rw-rw--- on "ax.txt" and "rw-----rw" on "bz.txt"
+=> chmod 660 ax.txt
+	chmod 640 bz.txt
+	to check
+	ls -l command run
+
+10. Switch to user natasha and try to update file "ax.txt"
+=> su natasha
+   echo "Hello, this is a test" > ax.txt
+
+11. try to do read operation on "bz.txt" and observe the result
+=> cat bz.txt
+   Permission denied
+
+12. switch back to "root"
+=>	exit
+
+13. try to modify the ax.txt and observe the result
+=> echo "This is a modification" >> /media/test-scripts/ax.txt
+
+14. get ACL using getfacl of file "ax.txt"
+=> getfacl ax.txt
+
+15. add user harry to ACL using setfacl command with read & write permission
+=> setfacl -m u:harry:rw ax.txt
+
+16. check updated the ACL with getfacl
+=> setfacl -m u:harry:rw ax.txt
+
+17. Now update the file "ax.txt" with the default user and observe the result
+=> echo "This is an update by the default user" >> /media/test-scripts/ax.txt
